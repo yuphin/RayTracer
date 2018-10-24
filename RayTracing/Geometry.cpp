@@ -12,5 +12,5 @@ bool solve_quadratic_eq(const float & a, const float & b, const float & c, float
 		x1 = c / q;
 	}
 	return true;
-
 }
+

@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <initializer_list>
 template<typename T = float>
 struct Vec3{
 	T x, y, z;
@@ -26,3 +27,6 @@ struct Vec3{
 };
 using Vec3f = Vec3<>;
 bool solve_quadratic_eq(const float&a, const float&b, const float&c, float&x0, float&x1) noexcept;
+inline float calculate_determinant(const Vec3f& a, const Vec3f&b, const Vec3f&c) {
+	return a.x * (b.y*c.z - c.y * b.z) + a.y*(c.x*b.z - b.x* c.z) + a.z* (b.x*c.y - c.x * b.y);
+}
