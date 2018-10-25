@@ -4,10 +4,10 @@ class Triangle :
 	public Object
 {
 public:
-	Vec3f a, b, c;
-	Triangle(const Vec3f& a, const Vec3f& b, const Vec3f& c);
+	Vec3f a, b, c,normal;
+	Triangle(const Vec3f& a, const Vec3f& b, const Vec3f& c,const Material& material);
 	~Triangle();
-	// Inherited via Object
-	virtual bool hit(Ray r, float & t) override;
+	virtual bool hit(const Ray& r, float & t) override;
+	virtual Vec3f getNormal(const Ray & r,float t) override;
 };
 
