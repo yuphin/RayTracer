@@ -11,7 +11,7 @@ public:
 	inline Vec3 operator+(const Vec3& vec)const  { return Vec3(x + vec.x, y + vec.y, z + vec.z);}
 	inline Vec3 operator-(const Vec3& vec) const  { return Vec3(x - vec.x, y - vec.y, z - vec.z); }
 	inline Vec3 operator-() { return Vec3(-x,-y,-z); }
-	inline Vec3 operator*( T& s) const { return Vec3(s*x,s*y,s*z); }
+	inline Vec3 operator*( T s) const { return Vec3(s*x,s*y,s*z); }
 	inline T dot_product(const Vec3& v) const { return v.x*x + v.y*y + v.z*z; }
 	inline T length() { return sqrtf(x*x + y * y + z * z); }
 	inline Vec3 cross_product(const Vec3& v) const { return Vec3(y*v.z - z * v.y, z*v.x - x * v.z, x*v.y - y * v.x); }
