@@ -1,8 +1,10 @@
 #include "Triangle.h"
-Triangle::Triangle(const Vec3f & a, const Vec3f & b, const Vec3f & c) : a(a),b(b),c(c) {}
+Triangle::Triangle(const Vec3f & a, const Vec3f & b, const Vec3f & c,const Material& material) : Object(material), a(a),b(b),c(c) {
+	normal = (b - a).cross_product(c - a).normalize();
+}
 Triangle::~Triangle() {}
 
-bool Triangle::hit(Ray r, float & t) {
+bool Triangle::hit(const Ray& r, float & t) {
 	auto v1 = a-b;
 	auto v2 = a-c;
 	auto v3 = r.direction;
@@ -19,3 +21,10 @@ bool Triangle::hit(Ray r, float & t) {
 		return false;
 	return true;
 }
+
+
+
+Vec3f Triangle::getNormal(const Ray & r,float t) {
+	return normal;
+}
+
