@@ -1,6 +1,6 @@
 #include "Triangle.h"
 Triangle::Triangle(const Vec3f & a, const Vec3f & b, const Vec3f & c,const Material& material) : Object(material), a(a),b(b),c(c) {
-	normal = (b - a).cross_product(c - a).normalize();
+	normal = ((b - a).cross_product(c - a)).normalize();
 }
 Triangle::~Triangle() {}
 
@@ -17,7 +17,7 @@ bool Triangle::hit(const Ray& r, float & t) {
 	if (gamma < 0.0f || gamma > 1.0f)
 		return false;
 	auto beta = calculate_determinant(v4, v2, v3) / M;
-	if (beta < 0.0f || beta > 1.0f - gamma)
+	if (beta < 0.0f || beta > (1.0f - gamma))
 		return false;
 	return true;
 }
