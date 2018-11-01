@@ -164,9 +164,9 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="parser.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="ppm.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="RayTracing.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Triangle.h" />
@@ -178,14 +178,9 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="parser.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="ppm.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="RayTracing.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="tinyxml2.cpp" />

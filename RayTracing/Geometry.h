@@ -22,6 +22,9 @@ public:
 };
 using Vec3f = Vec3<>;
 bool solve_quadratic_eq(const float&a, const float&b, const float&c, float&x0, float&x1) noexcept;
+inline Vec3f calculateEach(Vec3f vec, Vec3f reflect) {
+	return Vec3f(vec.x*reflect.x, vec.y*reflect.y, vec.z*reflect.z);
+}
 inline float calculate_determinant(const Vec3f& a, const Vec3f&b, const Vec3f&c) {
 	return a.x * (b.y*c.z - c.y * b.z) + a.y*(c.x*b.z - b.x* c.z) + a.z* (b.x*c.y - c.x * b.y);
 }
