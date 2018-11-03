@@ -8,6 +8,7 @@
 #include "Object.h"
 #include "Sphere.h"
 #include "Triangle.h"
+#include <math.h>
 #include "Light.h"
 #include <thread>
 #include <atomic>

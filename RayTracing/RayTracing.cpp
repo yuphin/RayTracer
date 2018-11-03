@@ -80,9 +80,9 @@ Vec3f getColor(const Ray& ray, parser::Scene& scene, const std::vector<std::uniq
 				G += E * (hitObject->material.diffuseReflectance.y)*(light->intensity.y)*std::fmax(0.0f, rec.normal.dot_product(l));
 				B += E * (hitObject->material.diffuseReflectance.z)*(light->intensity.z)*std::fmax(0.0f, rec.normal.dot_product(l));
 				// Blinn-Phong Shading
-				R += E * (hitObject->material.specularReflectance.x)*(light->intensity.x)*std::powf(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
-				G += E * (hitObject->material.specularReflectance.y)*(light->intensity.y)*std::powf(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
-				B += E * (hitObject->material.specularReflectance.z)*(light->intensity.z)*std::powf(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
+				R += E * (hitObject->material.specularReflectance.x)*(light->intensity.x)*pow(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
+				G += E * (hitObject->material.specularReflectance.y)*(light->intensity.y)*pow(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
+				B += E * (hitObject->material.specularReflectance.z)*(light->intensity.z)*pow(std::fmax(0.0f, rec.normal.dot_product(h)), hitObject->material.phongExponent);
 			} else {
 				continue;
 			}
@@ -107,17 +107,18 @@ void render(parser::Scene& scene, const std::vector<std::unique_ptr<Object>>& ob
 	Camera camera(Vec3f(cam.position.x, cam.position.y, cam.position.z), Vec3f(cam.gaze.x, cam.gaze.y, cam.gaze.z), Vec3f(cam.up.x, cam.up.y, cam.up.z), cam.near_distance);
 	auto imgSize = cam.image_height* cam.image_width * 3;
 	auto numCores = std::thread::hardware_concurrency();
-	float aspectRatio = cam.image_width / (float)cam.image_height;
 	volatile std::atomic<std::size_t> atomicCount(0);
 	std::vector<std::future<void>> futureVec;
 	for (; numCores > 0; numCores--) {
 		futureVec.emplace_back(std::async([&] {
 			while (true) {
 				auto pixIndex = (atomicCount += 3) - 3;
-				if (pixIndex > imgSize)
+				if (pixIndex >= imgSize)
 					break;
-				float u = (cam.near_plane.x + (cam.near_plane.y - cam.near_plane.x) * (((pixIndex / 3) % cam.image_width) + 0.5f) / cam.image_width)*aspectRatio;
-				float v = (cam.near_plane.z + (cam.near_plane.w - cam.near_plane.z) * ((cam.image_height - ((pixIndex / 3) / cam.image_height)) + 0.5f) / cam.image_height);
+				int xHelper = (pixIndex / 3);
+				int yHelper = xHelper / cam.image_width;
+				float u = (cam.near_plane.x + (cam.near_plane.y - cam.near_plane.x) * ((((xHelper)) % cam.image_width) + 0.5f) / cam.image_width);
+				float v = (cam.near_plane.z + (cam.near_plane.w - cam.near_plane.z) * (((cam.image_height - 1) - yHelper) + 0.5f) / cam.image_height);
 				auto ray = camera.cast_ray(u, v);
 				auto colorVec = getColor(ray, scene, objects, lights, 0);
 				image[pixIndex] = colorVec.x > 255.0f ? 255 : int(colorVec.x);
@@ -126,5 +127,6 @@ void render(parser::Scene& scene, const std::vector<std::unique_ptr<Object>>& ob
 			}
 		}));
 	}
+	
 
 }

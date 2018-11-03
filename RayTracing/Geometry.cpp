@@ -13,4 +13,3 @@ bool solve_quadratic_eq(const float & a, const float & b, const float & c, float
 	}
 	return true;
 }
-
